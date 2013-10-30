@@ -1,0 +1,227 @@
+
+<!-- saved from url=(0031)http://lmwtfy.average-joe.info/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Let me Wikipedia that for you</title>
+      <script type="text/javascript" src="jquery.min.js"></script>
+      <style>
+         body{
+            font-family: 'Linux Libertine', Libertine, Times, Serif;
+            text-align:center;
+         }
+         h1{
+            padding-top: 1em;
+            font-weight: normal;
+            /*font-variant: small-caps;*/
+            font-size: 17px;
+            padding: 0px;
+            margin: 0px;
+         }
+         .footer {
+            font-variant: small-caps;
+            font-size: 0.7em;
+         }
+         a {
+            color:black;
+            text-decoration:none;
+         }
+         a:hover, a:active {
+            text-decoration:underline overline;
+         }
+         h2{
+            font-size: 15px;
+            color: blue;
+         }
+         img {
+            vertical-align: bottom;
+         }
+         #globe {
+            background-image: url(globe.png);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            height: 400px;
+            min-width: 200px;
+            padding: 0px;
+            margin: 0px;
+         }
+         #core {
+            top: 100px;
+            bottom: 100px;
+            margin-left: -100px;
+            left: 50%;
+            height: 200px;
+            width: 200px;
+            position: relative;
+         }
+         #search {
+            width: 300px;
+         }
+         #go {
+            width: 100px;
+         }
+         #link {
+            width:400px;
+            display:none;
+            margin-left:auto;
+            margin-right:auto;
+            font-family: sans-serif;
+
+            text-align:center;         }
+         .satellite {
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            font-family: sans-serif;
+            font-size: 12px;
+            display:none;
+         }
+         .satellite.one {
+            top: 50px;
+            left: -100px;
+         }
+         .satellite.two {
+            top: -50px;
+            right: -50px;
+         }
+         .satellite.three {
+            bottom: -50px;
+            right: -50px;
+         }
+         .important {
+            color: red;
+            font-variant: small-caps;
+         }
+      </style>
+   <style id="bitmark_stylesheet" type="text/css"></style></head>
+   <body cz-shortcut-listen="true">
+      <h1 title="Let me Wikipedia that for you">LET ME <img src="text.png" alt="Wikipedia"> THAT FOR YOU</h1>
+<noscript>&lt;h2 class="important"&gt;Enable JavaScript to use this Website.&lt;/h2&gt;</noscript>
+<div id="globe">
+<div id="core">
+<div class="setup satellite one">
+<h2>Step 1</h2>
+Type a search term in the search box below.
+</div>
+<div class="run satellite one">
+<h2>Step 1</h2>
+Go to Wikipedia.org
+</div>
+
+<div class="setup satellite two">
+<h2>Step 2</h2>
+Click the arrow button.
+</div>
+
+<div class="run satellite two">
+<h2>Step 2</h2>
+Enter a search term
+</div>
+
+<div class="setup satellite three">
+<h2>Step 3</h2>
+Send the generated link to a friend ...or enemy.
+</div>
+
+<div class="run satellite three">
+<h2>Step 3</h2>
+Learn something <i>for yourself</i>!
+</div>
+
+</div>
+</div>
+<div id="searchFrm"><input type="search" results="10" id="search" onfocus="showStage(&#39;two&#39;);">
+<input type="button" value="&#8195;&#8594;&#8195;" id="go" onclick="go();"></div>
+<div id="link"></div>
+<br>
+<span class="footer">
+<a href="/">Create your own LMWTFY!</a> | <a href="http://joe.gl">Created by Joe Glombek</a> | <a href="http://thiswebsiteusescookies.joe.gl">Cookies</a> | <a href="http://lmgtfy.com/">Inspired by LMGTFY</a> | <a href="http://wikimediafoundation.org/">Wikipedia is a registered trademark of the Wikimedia Foundation</a>
+</span>
+      <script type="text/javascript">
+      var loadType = "run";
+
+      //function pageLoad() {
+         var query = getParameterByName("q");
+         if (query == "") {
+            loadType = "setup";
+            showStage("one");
+         }
+         else {
+            query = unescape(query);
+            showStage("one");
+            fillBox(query);
+            
+         }
+      //}
+      function fillBox(str) {
+         $('#search').val("");
+         var len = str.length;
+
+         for (var i = 0; i < len; i++){
+         //if (index < len) {
+            var c = str.charAt(i);
+            eval("setTimeout(function() { fillBoxWithChar('" + c + "'); }, 500 * i);");
+         }
+         //} else {
+         setTimeout(function() {
+            showStage("two");
+            setTimeout(runThree, 1000);
+         }, 500 * len);
+         //}
+      }
+
+function fillBoxWithChar(chr) {
+$('#search').val($('#search').val() + chr);
+}
+
+      function go() {
+         if(loadType == "setup") {
+            showStage("three");
+            $('#searchFrm').slideUp(500);
+            $('#link').text(lmwtfyUrlGen($('#search').val()));
+            $('#link').slideDown(500);
+         } else {
+            showStage("three");
+            setTimeout(goToWiki, 2000);
+         }
+      }
+
+      function runThree() {
+         showStage("three");
+         if (window.location.hash != "#noRedirect" && window.location.hash != "noRedirect") {
+            goToWiki();
+         }
+      }
+
+      function showStage(stage) {
+         $("." + loadType + ".satellite." + stage).fadeIn(1000);
+      }
+
+      function lmwtfyUrlGen(searchTerm) {
+         return window.location.protocol + "//" + window.location.hostname + window.location.pathname + "?q=" + escape(searchTerm);
+      }
+
+      function goToWiki() {
+         window.location.hash="noRedirect";
+         window.location = "http://en.wikipedia.org/wiki/" + wikifyQuery(query);
+      }
+
+      function wikifyQuery(q) {
+         var q2 = escape(q);
+         q2 = q.replace("%20", "_");
+         return q2;
+      }
+
+      function getParameterByName(name)
+      {
+         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+         var regexS = "[\\?&]" + name + "=([^&#]*)";
+         var regex = new RegExp(regexS);
+         var results = regex.exec(window.location.search);
+         if(results == null)
+           return "";
+         else
+           return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+      </script>
+   
+
+</body></html>
