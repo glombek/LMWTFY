@@ -147,9 +147,9 @@ Learn something <i>for yourself</i>!
          }
          else {
             query = unescape(query);
+            plausible("View", { props: { phrase: query }});
             showStage("one");
             fillBox(query);
-            
          }
       //}
       function fillBox(str) {
@@ -175,9 +175,11 @@ $('#search').val($('#search').val() + chr);
 
       function go() {
          if(loadType == "setup") {
+            var query = $('#search').val();
+            plausible("Generate", { props: { phrase: query }});
             showStage("three");
             $('#searchFrm').slideUp(500);
-            $('#link').text(lmwtfyUrlGen($('#search').val()));
+            $('#link').text(lmwtfyUrlGen(query));
             $('#link').slideDown(500);
          } else {
             showStage("three");
