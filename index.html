@@ -2,6 +2,7 @@
 <!-- saved from url=(0031)http://lmwtfy.average-joe.info/ -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
       <title>Let me Wikipedia that for you</title>
+      <meta name="description" content="The fun (and only slightly passive aggressive) way to share knowledge with friends and aquaintences." />
       <script defer data-domain="lmwtfy.joe.gl" src="https://anonymousdata.joe.gl/js/script.js"></script>
       <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
       <script type="text/javascript" src="jquery.min.js"></script>
@@ -148,6 +149,7 @@ Learn something <i>for yourself</i>!
          }
          else {
             query = unescape(query);
+            document.title = query + " - LMWTFY";
             plausible("View", { props: { phrase: query }});
             showStage("one");
             fillBox(query);
